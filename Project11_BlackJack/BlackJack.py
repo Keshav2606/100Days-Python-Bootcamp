@@ -59,7 +59,8 @@ while restart != 'n':
     while computer_score < 17 and computer_score != 0:
         computer_cards.append(getRandomCard())
         computer_score = calculate_score(computer_cards)
-  
+  print(f"Your final hand: {user_cards}, final score: {user_score}")
+  print(f"Computer's final hand: {computer_cards}, final score: {computer_score}")
   compare(user_score, computer_score)
   restart = input("Do you want to play again? ")
   if restart == 'y':
