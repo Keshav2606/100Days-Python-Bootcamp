@@ -35,9 +35,9 @@ def compare(user_score, computer_score):
   else:
     print("You Lose!!")
 
-repeat = ""
+restart = ""
 print(logo)
-while repeat != 'n':
+while restart != 'n':
   user_cards = [getRandomCard(), getRandomCard()]
   computer_cards = [getRandomCard(), getRandomCard()]
   
@@ -62,6 +62,6 @@ while repeat != 'n':
   
   compare(user_score, computer_score)
   restart = input("Do you want to play again? ")
-  if repeat == 'y':
-    clear()
+  if restart == 'y':
+    os.system('cls')
     print(logo)
