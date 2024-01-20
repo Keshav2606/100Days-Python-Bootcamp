@@ -65,9 +65,3 @@ while repeat != 'n':
   if repeat == 'y':
     clear()
     print(logo)
-            
-
-        
-
-
-
