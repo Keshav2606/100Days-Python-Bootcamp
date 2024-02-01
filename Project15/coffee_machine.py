@@ -33,10 +33,13 @@ def process_coins():
 
 def check_resources():
     if MENU[user_input]["ingredients"]["water"] > resources["water"]:
+        print("Sorry, there is not enough water.")
         return False
     elif MENU[user_input]["ingredients"]["milk"] > resources["milk"]:
+        print("Sorry, there is not enough milk.")
         return False
     elif MENU[user_input]["ingredients"]["coffee"] > resources["coffee"]:
+        print("Sorry, there is not enough coffee.")
         return False
     else:
         return True
@@ -55,9 +58,7 @@ while True:
     elif user_input == 'off':
         break
     else:
-        if process_coins():
-            if check_resources():
+        if check_resources():
+            if process_coins():
                 print(f"Here is your {user_input} ☕ enjoy!!")
                 update_resources(user_input)
-            else:
-                print("Sorry, we are running out of resources.")
