@@ -24,8 +24,9 @@ def process_coins():
     amount = (10 * curr10) + (20 * curr20) + (50 * curr50) + (100 * curr100)
 
     if amount >= to_pay:
-        print(f"Here is ₹{amount} in change.")
-        profit += amount
+        change = amount - to_pay
+        print(f"Here is ₹{change} in change.")
+        profit += to_pay
         return True
     else:
         print("Sorry, that's not enough money. Money refunded.")
