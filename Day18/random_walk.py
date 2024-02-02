@@ -1,12 +1,14 @@
 import random
 import turtle as t
 
+
 def random_color():
     r = random.randint(0, 255)
     g = random.randint(0, 255)
     b = random.randint(0, 255)
     my_color = (r, g, b)
     return my_color
+
 
 t.colormode(255)
 timmy = t.Turtle()
