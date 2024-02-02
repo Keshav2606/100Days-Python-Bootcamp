@@ -51,13 +51,14 @@ def update_resources(user_input):
     resources["coffee"] -= MENU[user_input]["ingredients"]["coffee"]
 
 profit = 0
-while True:
+is_on = True
+while is_on:
     user_input = input("What would you like? (espresso/latte/cappuccino): ").lower()
 
     if user_input == 'report':
         report()
     elif user_input == 'off':
-        break
+        is_on = False
     else:
         if check_resources():
             if process_coins():
