@@ -6,7 +6,19 @@ class Ball(Turtle):
         super().__init__()
         self.shape("circle")
         self.color("white")
+        self.penup()
         self.shapesize(0.6, 0.6)
+        self.x_move = 10
+        self.y_move = 10
 
     def move(self):
-        self.back(10)
+        new_x = self.xcor() + self.x_move
+        new_y = self.ycor() + self.y_move
+        self.goto(new_x, new_y)
+
+    def wall_bounce(self):
+        self.y_move *= -1
+
+    def paddle_bounce(self):
+        self.x_move *= -1
+
