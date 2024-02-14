@@ -1,27 +1,36 @@
 from tkinter import *
 
 # ---------------------------- CONSTANTS ------------------------------- #
-PINK = "#e2979c"
-RED = "#e7305b"
-GREEN = "#9bdeac"
+ORANGE = "orange"
+RED = "red"
+GREEN = "light green"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
-REPS = 0
+reps = 0
+check = ""
+timer = None
 
 
 # ---------------------------- TIMER RESET ------------------------------- #
 
 def reset_func():
+    global reps, check
+    reps = 0
+    window.after_cancel(timer)
+    check = ""
+    check_label.config(text=check)
     canvas.itemconfig(timer_text, text="00:00")
+    title_label.config(text="Timer", fg=GREEN)
 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 def count_down(count):
+    global reps, check
     min = count // 60
     sec = count % 60
     if sec < 10:
@@ -33,23 +42,30 @@ def count_down(count):
     time = f"{min}:{sec}"
     canvas.itemconfig(timer_text, text=time)
     if count > 0:
-        window.after(1000, count_down, count - 1)
+        global timer
+        timer = window.after(1000, count_down, count - 1)
     else:
-        REPS += 1
+        if reps != 0 and reps % 2 == 0:
+            check += "✔"
+            check_label.config(text=check)
+        start_func()
 
 
 def start_func():
-    global REPS
-    REPS += 1
+    global reps
+    reps += 1
     work_sec = WORK_MIN * 60
     short_break_sec = SHORT_BREAK_MIN * 60
     long_break_sec = LONG_BREAK_MIN * 60
 
-    if REPS == 8:
+    if reps == 8:
+        title_label.config(text="Break", fg=RED)
         count_down(long_break_sec)
-    elif REPS % 2 != 0:
+    elif reps % 2 != 0:
+        title_label.config(text="Work", fg=GREEN)
         count_down(work_sec)
-    elif REPS % 2 == 0:
+    elif reps % 2 == 0:
+        title_label.config(text="Break", fg=ORANGE)
         count_down(short_break_sec)
 
 
@@ -59,10 +75,10 @@ window = Tk()
 window.title("Pomodoro")
 window.config(padx=100, pady=50, bg=YELLOW)
 
-timer_label = Label(text="Timer", font=(FONT_NAME, 35, "bold"), fg=GREEN, bg=YELLOW)
-timer_label.grid(column=1, row=0)
+title_label = Label(text="Timer", font=(FONT_NAME, 35, "bold"), fg=GREEN, bg=YELLOW)
+title_label.grid(column=1, row=0)
 
-check_label = Label(text="✔", fg=GREEN, bg=YELLOW)
+check_label = Label(fg=GREEN, bg=YELLOW)
 check_label.grid(column=1, row=3)
 
 canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
