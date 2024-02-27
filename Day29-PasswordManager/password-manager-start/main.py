@@ -40,7 +40,8 @@ def save_password():
             "email": email,
             "password": password,
 
-        }}
+        }
+    }
 
     if len(website_input.get()) < 1 or len(password_input.get()) < 1:
         messagebox.showinfo(title="Oops..", message="Please make sure you haven't left any field empty.")
