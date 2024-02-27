@@ -32,11 +32,7 @@ def generate_password():
 
 
 def save_password():
-    message = f'''These are the data Entered:
-Email: {email_input.get()}
-Password: {password_input.get()}
-Is this Okay?'''
-    website = website_input.get()
+    website = website_input.get().capitalize()
     email = email_input.get()
     password = password_input.get()
     new_data = {
@@ -44,20 +40,39 @@ Is this Okay?'''
             "email": email,
             "password": password,
 
-    }}
+        }}
 
     if len(website_input.get()) < 1 or len(password_input.get()) < 1:
         messagebox.showinfo(title="Oops..", message="Please make sure you haven't left any field empty.")
     else:
-        is_okay = messagebox.askyesno(f"{website_input.get()}", message)
+        is_okay = messagebox.askyesno(f"{website_input.get()}",
+                                      f"These are the data Entered:\nEmail: {email_input.get()}\nPassword: {password_input.get()}\nIs this Okay?")
 
         if is_okay:
+            with open("password_file.json", mode="r") as file:
+                data = json.load(file)
+                data.update(new_data)
+
             with open("password_file.json", mode="w") as file:
-                json.dump(new_data, file, indent=4)
-                website_input.delete(0, END)
-                password_input.delete(0, END)
+                json.dump(data, file, indent=4)
+
+            website_input.delete(0, END)
+            password_input.delete(0, END)
 
             print("Password Saved Successfully.")
+
+
+def search():
+    website_name = website_input.get().capitalize()
+    with open("password_file.json", mode="r") as file:
+        data_dict = json.load(file)
+        try:
+            email = data_dict[website_name]["email"]
+            passwd = data_dict[website_name]["password"]
+        except KeyError:
+            messagebox.showinfo("Details", "Data regarding website is not Available.")
+        else:
+            messagebox.showinfo("Details", f"Website: {website_name}\nEmail Id: {email}\nPassword: {passwd}")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -74,29 +89,34 @@ website_label = Label(text="Website: ", font=("Arial", 10, "normal"))
 website_label.grid(column=0, row=1, sticky="e")
 website_label.config(padx=10, pady=10)
 
-website_input = Entry(width=40)
-website_input.grid(column=1, row=1, columnspan=2)
+website_input = Entry(width=34)
+website_input.grid(column=1, row=1)
 website_input.focus()
+
+search_btn = Button(text="Search", command=search)
+search_btn.config(padx=30, pady=1)
+search_btn.grid(column=2, row=1, sticky="e")
 
 email_label = Label(text="Email/Username: ", font=("Arial", 10, "normal"))
 email_label.grid(column=0, row=2, sticky="e")
 email_label.config(padx=10, pady=10)
 
-email_input = Entry(width=40)
+email_input = Entry(width=60)
 email_input.insert(0, "mishraji2606@gmail.com")
-email_input.grid(column=1, row=2, columnspan=2)
+email_input.grid(column=1, row=2, columnspan=2, sticky="w")
 
 password_label = Label(text="Password: ", font=("Arial", 10, "normal"))
 password_label.grid(column=0, row=3, sticky="e")
 password_label.config(padx=10, pady=10)
 
-password_input = Entry(width=40)
-password_input.grid(column=1, row=3, columnspan=2)
+password_input = Entry(width=34)
+password_input.grid(column=1, row=3, columnspan=1)
 
 passwd_generate_btn = Button(text="Generate Password", command=generate_password)
-passwd_generate_btn.grid(column=1, row=4)
+passwd_generate_btn.grid(column=2, row=3, sticky="e")
 
-add_btn = Button(text="ADD", width=15, command=save_password, bg="blue", fg="white")
-add_btn.grid(column=2, row=4, sticky="w")
+add_btn = Button(text="ADD", width=50, command=save_password, bg="blue", fg="white")
+add_btn.config(padx=3, pady=1)
+add_btn.grid(column=1, row=4, columnspan=2, sticky="w")
 
 window.mainloop()
