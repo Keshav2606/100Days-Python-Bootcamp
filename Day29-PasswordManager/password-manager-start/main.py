@@ -50,12 +50,16 @@ def save_password():
                                       f"These are the data Entered:\nEmail: {email_input.get()}\nPassword: {password_input.get()}\nIs this Okay?")
 
         if is_okay:
-            with open("password_file.json", mode="r") as file:
-                data = json.load(file)
-                data.update(new_data)
-
-            with open("password_file.json", mode="w") as file:
-                json.dump(data, file, indent=4)
+            try:
+                with open("password_file.json", mode="r") as file:
+                    data = json.load(file)
+                    data.update(new_data)
+            except FileNotFoundError:
+                with open("password_file.json", mode="w") as file:
+                    json.dump(new_data, file, indent=4)
+            else:
+                with open("password_file.json", mode="w") as file:
+                    json.dump(data, file, indent=4)
 
             website_input.delete(0, END)
             password_input.delete(0, END)
