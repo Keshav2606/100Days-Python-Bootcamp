@@ -53,18 +53,16 @@ def save_password():
             try:
                 with open("password_file.json", mode="r") as file:
                     data = json.load(file)
-                    data.update(new_data)
             except FileNotFoundError:
                 with open("password_file.json", mode="w") as file:
                     json.dump(new_data, file, indent=4)
             else:
+                data.update(new_data)
                 with open("password_file.json", mode="w") as file:
                     json.dump(data, file, indent=4)
-
-            website_input.delete(0, END)
-            password_input.delete(0, END)
-
-            print("Password Saved Successfully.")
+            finally:
+                website_input.delete(0, END)
+                password_input.delete(0, END)
 
 
 def search():
@@ -95,7 +93,7 @@ website_label.grid(column=0, row=1, sticky="e")
 website_label.config(padx=10, pady=10)
 
 website_input = Entry(width=34)
-website_input.grid(column=1, row=1)
+website_input.grid(column=1, row=1, sticky="w")
 website_input.focus()
 
 search_btn = Button(text="Search", command=search)
@@ -115,7 +113,7 @@ password_label.grid(column=0, row=3, sticky="e")
 password_label.config(padx=10, pady=10)
 
 password_input = Entry(width=34)
-password_input.grid(column=1, row=3, columnspan=1)
+password_input.grid(column=1, row=3, columnspan=1, sticky="w")
 
 passwd_generate_btn = Button(text="Generate Password", command=generate_password)
 passwd_generate_btn.grid(column=2, row=3, sticky="e")
