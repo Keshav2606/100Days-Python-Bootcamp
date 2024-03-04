@@ -2,10 +2,10 @@ import requests
 from twilio.rest import Client
 
 city = "London"
-API_KEY = "3cecebe712ffca4aca1213818b57a8a1"
+API_KEY = ""
 
 account_sid = "ACf37f08a539c79e7e968db1983fb4ae02"
-auth_token = "a4a52cdee2d7dd99e29ede8c367641b0"
+auth_token = ""
 
 parameters = {
     "q": city,
