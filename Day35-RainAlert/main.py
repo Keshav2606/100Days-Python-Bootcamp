@@ -1,7 +1,7 @@
 import requests
 from twilio.rest import Client
 
-city = "London"
+city = "Delhi"
 API_KEY = ""
 
 account_sid = "ACf37f08a539c79e7e968db1983fb4ae02"
