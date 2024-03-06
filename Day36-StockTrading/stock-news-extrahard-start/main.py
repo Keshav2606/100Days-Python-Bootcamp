@@ -5,9 +5,9 @@ STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
 
 account_sid = "ACf37f08a539c79e7e968db1983fb4ae02"
-auth_token = "864ec8271a8e5ba48926fe099a04685a"
+auth_token = ""
 
-stock_api_key = "M4F02C79LRPI3K2Z"
+stock_api_key = ""
 stock_parameters = {
     "function": "TIME_SERIES_DAILY",
     "symbol": STOCK,
@@ -35,7 +35,7 @@ if percentage_change < 0:
 else:
     stock_msg = f"TSLA: 🔺{percentage_change}%"
 
-news_api_key = "92c30c7278114a13bf4fb88dfef486d8"
+news_api_key = ""
 news_parameters = {
     "q": "tesla",
     "from": "2024-02-05",
